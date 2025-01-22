@@ -44,9 +44,9 @@ export default {
             .get(`${this.store.api.baseUrl}${this.store.api.apiUrls.sessioni}`)
             .then((response) => {
                this.mySessioni = response.data;
-               console.log('mysess', mySessioni);
             })
-            .catch(() => {
+            .catch((error) => {
+               console.error(error);
                this.showAlert('error', 'Errore', 'Errore nel recupero delle sessioni');
             })
             .finally(() => {
@@ -55,7 +55,9 @@ export default {
       },
 
       confirmDelete(sessioneId) {
+         console.log('invoco delete');
          this.sessioneToDelete = sessioneId;
+         console.log('sesstoDel', this.sessioneToDelete);
          this.showModal = true;
       },
 
@@ -153,13 +155,15 @@ export default {
    <div class="sessione-container">
       <!-- <CreateButton to="/sessione-create" /> -->
 
-      <div class="sessione-header container d-flex justify-content-between align-items-center mb-4">
-         <div class="d-flex align-items-center search-bar">
-            <i class="fa-solid fa-magnifying-glass search-left"></i>
-            <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca sessione" />
-            <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
+      <div class="sessione-header">
+         <div class="container d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center search-bar">
+               <i class="fa-solid fa-magnifying-glass search-left"></i>
+               <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca sessione" />
+               <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
+            </div>
+            <OrderSelect v-model="selectedOrder" />
          </div>
-         <OrderSelect v-model="selectedOrder" />
       </div>
 
       <div class="container">
@@ -175,6 +179,22 @@ export default {
             />
          </div>
       </div>
+
+      <ConfirmDeleteModal
+         :visible="showModal"
+         title="Conferma Eliminazione"
+         message="Sei sicuro di voler eliminare questo tour? Questa operazione è irreversibile."
+         @confirm="deleteSessione"
+         @cancel="showModal = false"
+      />
+
+      <AlertNotification
+         v-if="alert.show"
+         :type="alert.type"
+         :title="alert.title"
+         :message="alert.message"
+         @closed="alert.show = false"
+      />
    </div>
 </template>
 
@@ -182,6 +202,14 @@ export default {
 @use '../assets/scss/style.scss' as *;
 
 .sessione-header {
+   position: sticky;
+   top: 0;
+   right: 0;
+   left: 0;
+   z-index: 2;
+   padding-bottom: 20px;
+   background-color: $background-color;
+
    .search-bar {
       background-color: $secondary-bg-color;
       border-radius: 20px;
