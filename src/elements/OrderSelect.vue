@@ -31,8 +31,6 @@ export default {
          <option value="" disabled>Ordina per</option>
          <option value="1">Data creazione: asc</option>
          <option value="2">Data creazione: desc</option>
-         <option value="3">Data update: asc</option>
-         <option value="4">Data update: desc</option>
       </select>
    </div>
 </template>
