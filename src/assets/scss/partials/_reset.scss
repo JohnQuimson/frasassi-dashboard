@@ -2,3 +2,28 @@ a,
 router-link {
    text-decoration: none !important;
 }
+
+// *************
+// Scrollbar
+// *************
+
+/* Larghezza */
+::-webkit-scrollbar {
+   width: 5px;
+}
+
+/* Percorso (in questo caso nascosto) */
+::-webkit-scrollbar-track {
+   background: none;
+}
+
+/* stile scroll-bar */
+::-webkit-scrollbar-thumb {
+   background-color: rgba(110, 110, 110, 0.8);
+   border-radius: 20px;
+}
+
+/* Hover */
+::-webkit-scrollbar-thumb:hover {
+   background: #888;
+}
