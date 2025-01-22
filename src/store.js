@@ -8,36 +8,39 @@ export const store = reactive({
    api: {
       baseUrl: 'http://localhost:3000',
       apiUrls: {
-         tours: '/tours',
-         immagini: '/immagini',
-         users: '/users',
-         videos: '/video360',
+         // tours: '/tours',
+         // immagini: '/immagini',
+         // users: '/users',
+         // videos: '/video360',
+         sessioni: '/sessioni',
       },
    },
 
-   selectedUser: JSON.parse(localStorage.getItem('selectedUser')) || {
-      id: null,
-      name: null,
-      email: null,
-      role: null,
-   },
+   // selectedUser: JSON.parse(localStorage.getItem('selectedUser')) || {
+   //    id: null,
+   //    name: null,
+   //    email: null,
+   //    role: null,
+   // },
 
-   selectedTour: JSON.parse(localStorage.getItem('selectedTour')) || {
-      nome: null,
-   },
+   // selectedTour: JSON.parse(localStorage.getItem('selectedTour')) || {
+   //    nome: null,
+   // },
 
-   selectedVideo: {
-      nome: null,
-   },
+   // selectedVideo: {
+   //    nome: null,
+   // },
 
-   auth: {
-      user: null,
-      isAuthenticated: false,
-   },
+   // auth: {
+   //    user: null,
+   //    isAuthenticated: false,
+   // },
 
-   tours: [],
-   images: [],
-   users: [],
+   // tours: [],
+   // images: [],
+   // users: [],
+
+   sessioni: [],
 
    // Funzione per inizializzare lo stato dell'autenticazione all'avvio
    initializeAuth() {
@@ -52,22 +55,22 @@ export const store = reactive({
 });
 
 // Watch per selectedUser
-watch(
-   () => store.selectedUser,
-   (newValue) => {
-      localStorage.setItem('selectedUser', JSON.stringify(newValue));
-   },
-   { deep: true }
-);
+// watch(
+//    () => store.selectedUser,
+//    (newValue) => {
+//       localStorage.setItem('selectedUser', JSON.stringify(newValue));
+//    },
+//    { deep: true }
+// );
 
 // Watch per selectedTour
-watch(
-   () => store.selectedTour,
-   (newValue) => {
-      localStorage.setItem('selectedTour', JSON.stringify(newValue));
-   },
-   { deep: true }
-);
+// watch(
+//    () => store.selectedTour,
+//    (newValue) => {
+//       localStorage.setItem('selectedTour', JSON.stringify(newValue));
+//    },
+//    { deep: true }
+// );
 
 // Inizializza lo stato dell'autenticazione quando l'app parte
 store.initializeAuth();

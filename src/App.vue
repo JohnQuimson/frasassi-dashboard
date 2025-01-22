@@ -23,14 +23,14 @@ export default {
       };
    },
 
-   created() {
-      const token = localStorage.getItem('token');
-      if (token) {
-         this.store.auth.isAuthenticated = true;
-      } else {
-         this.store.auth.isAuthenticated = false;
-      }
-   },
+   // created() {
+   //    const token = localStorage.getItem('token');
+   //    if (token) {
+   //       this.store.auth.isAuthenticated = true;
+   //    } else {
+   //       this.store.auth.isAuthenticated = false;
+   //    }
+   // },
 
    computed: {
       isLoginPage() {
