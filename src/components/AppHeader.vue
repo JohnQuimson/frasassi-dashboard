@@ -55,12 +55,12 @@ export default {
          <h1>{{ title }}</h1>
 
          <!-- Bottone per mostrare le info utente -->
-         <button @click="toggleUserInfoTooltip" class="user-info-btn">
+         <!-- <button @click="toggleUserInfoTooltip" class="user-info-btn">
             <i class="fa-solid fa-user"></i>
-         </button>
+         </button> -->
 
          <!-- Tooltip (nuvoletta) con le informazioni utente -->
-         <div v-if="showUserInfoTooltip" class="user-info-tooltip">
+         <!-- <div v-if="showUserInfoTooltip" class="user-info-tooltip">
             <h2>Informazioni Utente</h2>
             <p><strong>Nome:</strong> {{ userInfo.nome }}</p>
             <p><strong>Email:</strong> {{ userInfo.email }}</p>
@@ -80,7 +80,7 @@ export default {
             <span @click="toggleUserInfoTooltip" class="close-user-info">
                <i class="fa-solid fa-xmark"></i>
             </span>
-         </div>
+         </div> -->
       </div>
    </header>
 </template>
