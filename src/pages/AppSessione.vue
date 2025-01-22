@@ -55,9 +55,7 @@ export default {
       },
 
       confirmDelete(sessioneId) {
-         console.log('invoco delete');
          this.sessioneToDelete = sessioneId;
-         console.log('sesstoDel', this.sessioneToDelete);
          this.showModal = true;
       },
 
@@ -183,7 +181,7 @@ export default {
       <ConfirmDeleteModal
          :visible="showModal"
          title="Conferma Eliminazione"
-         message="Sei sicuro di voler eliminare questo tour? Questa operazione è irreversibile."
+         message="Sei sicuro di voler eliminare questa sessione?"
          @confirm="deleteSessione"
          @cancel="showModal = false"
       />
