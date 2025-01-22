@@ -8,32 +8,33 @@ export default {
          store,
          links: [
             // { name: 'Main', path: '/', icon: 'fa-solid fa-house' },
-            { name: 'Tour Virtuali', path: '/tour', icon: 'fa-solid fa-vr-cardboard' },
-            { name: 'Video 360', path: '/video360', icon: 'fa-solid fa-video' },
+            // { name: 'Tour Virtuali', path: '/tour', icon: 'fa-solid fa-vr-cardboard' },
+            // { name: 'Video 360', path: '/video360', icon: 'fa-solid fa-video' },
+            { name: 'Sessioni', path: '/sessioni', icon: 'fa-solid fa-users' },
          ],
-         adminLinks: [{ name: 'Users', path: '/user', icon: 'fa-solid fa-user' }],
+         // adminLinks: [{ name: 'Users', path: '/user', icon: 'fa-solid fa-user' }],
          isCollapsed: JSON.parse(localStorage.getItem('isCollapsed')) || false, // Recupera lo stato salvato o imposta false
       };
    },
    computed: {
-      isLoggedIn() {
-         return store.auth.isAuthenticated;
-      },
+      // isLoggedIn() {
+      //    return store.auth.isAuthenticated;
+      // },
       username() {
          return store.auth.user?.username || '';
       },
-      role() {
-         return store.auth.user?.role || '';
-      },
+      // role() {
+      //    return store.auth.user?.role || '';
+      // },
    },
    methods: {
-      logout() {
-         localStorage.removeItem('token');
-         localStorage.removeItem('user');
-         store.auth.isAuthenticated = false;
-         store.auth.user = null;
-         this.$router.push('/login');
-      },
+      // logout() {
+      //    localStorage.removeItem('token');
+      //    localStorage.removeItem('user');
+      //    store.auth.isAuthenticated = false;
+      //    store.auth.user = null;
+      //    this.$router.push('/login');
+      // },
       toggleSidebar() {
          this.isCollapsed = !this.isCollapsed;
          localStorage.setItem('isCollapsed', JSON.stringify(this.isCollapsed));
@@ -58,7 +59,7 @@ export default {
             <img class="img-fluid" src="/public/img/logo_ldmultimedia_bianco.png" alt="Logo" />
          </div>
 
-         <ul v-if="isLoggedIn" class="nav flex-column mt-5">
+         <ul class="nav flex-column mt-5">
             <li class="nav-item" v-for="item in links" :key="item.name">
                <router-link
                   :to="item.path"
@@ -70,7 +71,7 @@ export default {
                   <span>{{ item.name }}</span>
                </router-link>
             </li>
-            <li v-if="role === 'admin'" class="nav-item" v-for="item in adminLinks" :key="item.name">
+            <!-- <li v-if="role === 'admin'" class="nav-item" v-for="item in adminLinks" :key="item.name">
                <router-link
                   :to="item.path"
                   class="nav-link d-flex align-items-center justify-content-start"
@@ -79,10 +80,10 @@ export default {
                   <i :class="item.icon" class="me-2"></i>
                   <span>{{ item.name }}</span>
                </router-link>
-            </li>
+            </li> -->
          </ul>
 
-         <router-link v-if="!isLoggedIn && !isCollapsed" to="/login" class="btn btn-light mt-auto">Login</router-link>
+         <!-- <router-link v-if="!isLoggedIn && !isCollapsed" to="/login" class="btn btn-light mt-auto">Login</router-link> -->
       </div>
    </div>
 </template>

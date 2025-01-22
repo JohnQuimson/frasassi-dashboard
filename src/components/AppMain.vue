@@ -13,7 +13,7 @@ export default {
    methods: {},
 
    created() {
-      this.store.title = 'Dashboard';
+      // this.store.title = 'Dashboard';
    },
 };
 </script>
