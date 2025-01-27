@@ -20,9 +20,9 @@ export default {
       // isLoggedIn() {
       //    return store.auth.isAuthenticated;
       // },
-      username() {
-         return store.auth.user?.username || '';
-      },
+      // username() {
+      //    return store.auth.user?.username || '';
+      // },
       // role() {
       //    return store.auth.user?.role || '';
       // },
@@ -40,12 +40,12 @@ export default {
          localStorage.setItem('isCollapsed', JSON.stringify(this.isCollapsed));
       },
 
-      populateSelectedUser() {
-         this.store.selectedUser.id = this.store.auth.user.id;
-         this.store.selectedUser.name = this.store.auth.user.username;
-         this.store.selectedUser.email = this.store.auth.user.email;
-         this.store.selectedUser.role = this.store.auth.user.role;
-      },
+      // populateSelectedUser() {
+      //    this.store.selectedUser.id = this.store.auth.user.id;
+      //    this.store.selectedUser.name = this.store.auth.user.username;
+      //    this.store.selectedUser.email = this.store.auth.user.email;
+      //    this.store.selectedUser.role = this.store.auth.user.role;
+      // },
    },
 
    created() {},
@@ -65,10 +65,9 @@ export default {
                   :to="item.path"
                   class="nav-link d-flex align-items-center justify-content-start"
                   active-class="active"
-                  @click="populateSelectedUser"
                >
-                  <i :class="item.icon" class="me-2"></i>
-                  <span>{{ item.name }}</span>
+                  <i :class="item.icon" class="me-2 icona"></i>
+                  <span class="name">{{ item.name }}</span>
                </router-link>
             </li>
             <!-- <li v-if="role === 'admin'" class="nav-item" v-for="item in adminLinks" :key="item.name">
@@ -105,6 +104,14 @@ export default {
 
       &:hover {
          border-left: 2px solid white;
+      }
+
+      .icona {
+         width: 30px;
+         font-size: 22px;
+      }
+      .name {
+         font-size: 18px;
       }
    }
    .active {

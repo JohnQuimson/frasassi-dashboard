@@ -150,7 +150,7 @@ export default {
 <template>
    <Loader v-if="loading" />
 
-   <div class="sessione-container">
+   <div class="sessione-container pb-5">
       <!-- <CreateButton to="/sessione-create" /> -->
 
       <div class="sessione-header">

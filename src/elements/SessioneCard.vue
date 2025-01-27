@@ -19,16 +19,16 @@ export default {
 <template>
    <div class="col-12">
       <div class="sessione-card shadow-sm">
-         <div class="card-body">
+         <router-link :to="`/sessioni/${sessione.id}`" class="card-body">
             <h5 class="card-title">{{ sessione.titolo }}</h5>
             <div class="operator-info">
                <p class="card-text m-0">Nome: {{ sessione.nome }}</p>
                <p class="card-text m-0">Cognome: {{ sessione.cognome }}</p>
                <p class="card-text m-0">Data: {{ formatDate(sessione.timestamp) }}</p>
             </div>
-         </div>
+         </router-link>
          <div class="card-buttons d-flex justify-content-between align-items-center">
-            <router-link :to="`/session/edit/${sessione.id}`" class="action-button">
+            <router-link :to="`/sessioni/edit/${sessione.id}`" class="action-button">
                <i class="fa-solid fa-pen-to-square"></i>
             </router-link>
             <button class="action-button" @click.stop="onDeleteClick">
@@ -49,6 +49,7 @@ export default {
    box-shadow: 10px 10px 18px rgba(0, 0, 0, 0.2);
    display: flex;
    padding: 20px;
+   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
    .card-body {
       .card-title {
@@ -72,6 +73,11 @@ export default {
       .action-button {
          font-size: 0.9rem;
       }
+   }
+
+   &:hover {
+      transform: scale(1.05);
+      box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.3);
    }
 }
 </style>
