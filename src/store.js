@@ -23,9 +23,9 @@ export const store = reactive({
    //    role: null,
    // },
 
-   // selectedTour: JSON.parse(localStorage.getItem('selectedTour')) || {
-   //    nome: null,
-   // },
+   selectedSessione: JSON.parse(localStorage.getItem('selectedSessione')) || {
+      titolo: null,
+   },
 
    // selectedVideo: {
    //    nome: null,
@@ -71,6 +71,14 @@ export const store = reactive({
 //    },
 //    { deep: true }
 // );
+
+watch(
+   () => store.selectedSessione,
+   (newValue) => {
+      localStorage.setItem('selectedSessione', JSON.stringify(newValue));
+   },
+   { deep: true }
+);
 
 // Inizializza lo stato dell'autenticazione quando l'app parte
 store.initializeAuth();

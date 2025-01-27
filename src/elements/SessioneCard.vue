@@ -1,6 +1,14 @@
 <script>
+import { store } from '../store';
+
 export default {
    name: 'SessionCard',
+
+   data() {
+      return {
+         store,
+      };
+   },
 
    props: {
       sessione: Object,
@@ -12,13 +20,17 @@ export default {
       onDeleteClick() {
          this.onDelete(this.sessione.id);
       },
+
+      populateSelectedSessione() {
+         store.selectedSessione = this.sessione;
+      },
    },
 };
 </script>
 
 <template>
    <div class="col-12">
-      <div class="sessione-card shadow-sm">
+      <div class="sessione-card shadow-sm" @click="populateSelectedSessione()">
          <router-link :to="`/sessioni/${sessione.id}`" class="card-body">
             <h5 class="card-title">{{ sessione.titolo }}</h5>
             <div class="operator-info">
@@ -50,6 +62,7 @@ export default {
    display: flex;
    padding: 20px;
    transition: transform 0.3s ease, box-shadow 0.3s ease;
+   z-index: 10;
 
    .card-body {
       .card-title {

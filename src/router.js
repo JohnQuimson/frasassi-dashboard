@@ -19,6 +19,7 @@ import AppVideo360ByUser from './pages/AppVideo360ByUser.vue';
 import AppVideo360Create from './pages/AppVideo360Create.vue';
 import AppSessione from './pages/AppSessione.vue';
 import AppSessioneEdit from './pages/AppSessioneEdit.vue';
+import AppSessioneSingle from './pages/AppSessioneSingle.vue';
 
 const router = createRouter({
    history: createWebHistory(),
@@ -36,6 +37,11 @@ const router = createRouter({
          path: '/sessioni/edit/:id',
          name: 'SessioneEdit',
          component: AppSessioneEdit,
+      },
+      {
+         path: '/sessioni/:id',
+         name: 'AppSessioneSingle',
+         component: AppSessioneSingle,
       },
 
       // **************************
