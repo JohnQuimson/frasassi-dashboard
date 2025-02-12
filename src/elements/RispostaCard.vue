@@ -24,7 +24,9 @@ export default {
          <div class="card-body">
             <h4 class="card-title">{{ domanda }}</h4>
             <p class="card-text">Risposta: {{ opzione }}</p>
-            <p class="card-text">Corretta: {{ isCorrect ? 'Sì' : 'No' }}</p>
+            <p class="card-text" :class="{ 'text-success': isCorrect, 'text-danger': !isCorrect }">
+               {{ isCorrect ? 'Corretta' : 'Errata' }}
+            </p>
          </div>
       </div>
    </div>

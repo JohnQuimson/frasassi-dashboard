@@ -14,6 +14,8 @@ export default {
          loading: false,
          visore: null,
          myrisposte: [],
+         filterQuiz: 'all',
+         quizOptions: [],
          statistiche: {
             corrette: 0,
             totali: 0,
@@ -71,8 +73,7 @@ export default {
                   percentuale: totali > 0 ? ((corrette / totali) * 100).toFixed(2) : 0,
                };
 
-               console.log(JSON.parse(JSON.stringify(this.myrisposte)));
-               console.log(this.statistiche);
+               this.populateQuizOptions();
             })
             .catch((error) => {
                console.error(error);
@@ -83,6 +84,11 @@ export default {
             });
       },
 
+      populateQuizOptions() {
+         this.quizOptions = Object.keys(this.myrisposte);
+         this.quizOptions.unshift('all');
+      },
+
       clearSearch() {
          this.searchQuery = '';
       },
@@ -90,26 +96,32 @@ export default {
 
    computed: {
       filteredRisposte() {
-         if (this.searchQuery.trim() === '') {
-            return this.myrisposte;
-         }
+         let risposteFiltrate = this.myrisposte;
 
-         const query = this.searchQuery.toLowerCase();
-         const filtered = {};
+         // Filtro per ricerca testuale
+         if (this.searchQuery.trim() !== '') {
+            const query = this.searchQuery.toLowerCase();
+            const filtered = {};
 
-         // Scorre tutte le risposte raggruppate per quiz
-         Object.keys(this.myrisposte).forEach((quiz) => {
-            const risposte = this.myrisposte[quiz].filter((risposta) => {
-               return risposta.domanda.domanda.toLowerCase().includes(query);
+            Object.keys(risposteFiltrate).forEach((quiz) => {
+               const risposte = risposteFiltrate[quiz].filter((risposta) => {
+                  return risposta.domanda.domanda.toLowerCase().includes(query);
+               });
+
+               if (risposte.length > 0) {
+                  filtered[quiz] = risposte;
+               }
             });
 
-            // Aggiunge solo i quiz che hanno almeno una domanda corrispondente
-            if (risposte.length > 0) {
-               filtered[quiz] = risposte;
-            }
-         });
+            risposteFiltrate = filtered;
+         }
 
-         return filtered;
+         // Filtro per select
+         if (this.filterQuiz !== 'all') {
+            return { [this.filterQuiz]: risposteFiltrate[this.filterQuiz] || [] };
+         }
+
+         return risposteFiltrate;
       },
    },
 
@@ -129,10 +141,19 @@ export default {
                <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca sessione" />
                <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
             </div>
+            <!-- select filter -->
+            <div class="filter">
+               <select id="quizFilter" v-model="filterQuiz" class="form-select w-auto">
+                  <option value="all" disabled>Filtra per Quiz</option>
+                  <option v-for="quiz in quizOptions" :key="quiz" :value="quiz">
+                     {{ quiz === 'all' ? 'Tutti' : quiz }}
+                  </option>
+               </select>
+            </div>
          </div>
 
          <!-- Sezione Statistiche -->
-         <div class="col-12 mt-4">
+         <div class="col-12 mt-5">
             <h2 class="text-info">Statistiche</h2>
             <p class="text-white m-0">Risposte corrette: {{ statistiche.corrette }} / {{ statistiche.totali }}</p>
             <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
@@ -143,7 +164,7 @@ export default {
          <div class="row">
             <ul class="ps-0">
                <li v-for="(risposte, quiz) in filteredRisposte" :key="quiz">
-                  <h3 class="text-info">{{ quiz }}</h3>
+                  <h3 class="text-info mt-5">{{ quiz }}</h3>
                   <div class="row g-3 d-flex justify-content-center mb-5">
                      <RispostaCard
                         v-for="risposta in risposte"
@@ -171,6 +192,7 @@ export default {
    z-index: 2;
    padding-bottom: 20px;
    background-color: $background-color;
+   border-bottom: 1px solid rgb(54, 54, 54);
 
    .search-bar {
       background-color: $secondary-bg-color;
@@ -211,6 +233,39 @@ export default {
       .x-placeholder {
          padding: 10px;
          opacity: 0;
+      }
+   }
+
+   .filter {
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+      select {
+         width: 100%;
+         height: 80%;
+         border-radius: 20px;
+         font-size: 14px;
+         background-color: $secondary-bg-color;
+         border: none;
+         color: $gray-color;
+
+         &:focus {
+            box-shadow: none;
+         }
+
+         option {
+            font-size: 16px;
+            padding: 0 20px;
+            color: $gray-color;
+
+            &:disabled {
+               color: $gray-color;
+               background-color: $secondary-bg-color;
+            }
+         }
       }
    }
 }
