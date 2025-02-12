@@ -29,7 +29,7 @@ export default {
 </script>
 
 <template>
-   <div class="col-12">
+   <div class="col-10">
       <div class="sessione-card shadow-sm" @click="populateSelectedSessione()">
          <router-link :to="`/sessioni/${sessione.id}`" class="card-body">
             <h5 class="card-title">{{ sessione.titolo }}</h5>

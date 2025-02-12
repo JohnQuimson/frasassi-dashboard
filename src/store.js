@@ -13,6 +13,7 @@ export const store = reactive({
          // users: '/users',
          // videos: '/video360',
          sessioni: '/sessioni',
+         visori: '/visori',
       },
    },
 

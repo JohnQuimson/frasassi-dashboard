@@ -167,7 +167,7 @@ export default {
       <div class="container">
          <div v-if="!filteredSessioni.length" class="alert alert-info">Nessun dato trovato</div>
 
-         <div class="row g-3">
+         <div class="row g-3 d-flex justify-content-center">
             <SessioneCard
                v-for="sessione in filteredSessioni"
                :key="sessione.id"
