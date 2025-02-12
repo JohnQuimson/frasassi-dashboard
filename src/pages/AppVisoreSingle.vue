@@ -12,6 +12,11 @@ export default {
          loading: false,
          visore: null,
          myrisposte: [],
+         statistiche: {
+            corrette: 0,
+            totali: 0,
+            percentuale: 0,
+         },
          alert: {
             show: false,
             type: 'success',
@@ -37,15 +42,34 @@ export default {
             .then((response) => {
                // Raggruppa per `domanda.quiz`
                const grouped = {};
+               let totali = 0;
+               let corrette = 0;
+
                response.data.forEach((risposta) => {
                   const quiz = risposta.domanda.quiz;
                   if (!grouped[quiz]) {
                      grouped[quiz] = [];
                   }
                   grouped[quiz].push(risposta);
+
+                  // Calcolo statistiche
+                  totali++;
+                  if (risposta.isCorrect) {
+                     corrette++;
+                  }
                });
+
                this.myrisposte = grouped;
+
+               // Calcola le statistiche
+               this.statistiche = {
+                  corrette: corrette,
+                  totali: totali,
+                  percentuale: totali > 0 ? ((corrette / totali) * 100).toFixed(2) : 0,
+               };
+
                console.log(JSON.parse(JSON.stringify(this.myrisposte)));
+               console.log(this.statistiche);
             })
             .catch((error) => {
                console.error(error);
@@ -68,6 +92,14 @@ export default {
    <div class="visore-container pb-5">
       <div class="container">
          <div class="row">
+            <!-- Sezione Statistiche -->
+            <div class="col-12 mb-4">
+               <h2 class="text-info">Statistiche</h2>
+               <p class="text-white">Risposte corrette: {{ statistiche.corrette }} / {{ statistiche.totali }}</p>
+               <p class="text-white">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
+            </div>
+
+            <!-- Lista delle Risposte Raggruppate per Quiz -->
             <ul>
                <li v-for="(risposte, quiz) in myrisposte" :key="quiz">
                   <h3 class="text-info">{{ quiz }}</h3>
