@@ -37,6 +37,7 @@ export default {
                <p class="card-text m-0">Nome: {{ sessione.nome }}</p>
                <p class="card-text m-0">Cognome: {{ sessione.cognome }}</p>
                <p class="card-text m-0">Data: {{ formatDate(sessione.timestamp) }}</p>
+               <p class="text-danger">ID: {{ sessione.id }}</p>
             </div>
          </router-link>
          <div class="card-buttons d-flex justify-content-between align-items-center">

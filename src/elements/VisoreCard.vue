@@ -28,6 +28,7 @@ export default {
          <div class="card-body" @click="populateSelectedVisore()">
             <div class="card-title">
                <h5>{{ visore.nome }} {{ visore.cognome }}</h5>
+               <p class="text-danger">ID: {{ visore.id }}</p>
             </div>
          </div>
       </router-link>
