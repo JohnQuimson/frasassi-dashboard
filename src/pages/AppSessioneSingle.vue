@@ -111,10 +111,10 @@ export default {
          <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
                <i class="fa-solid fa-magnifying-glass search-left"></i>
-               <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca sessione" />
+               <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca visore" />
                <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
             </div>
-            <OrderSelect v-model="selectedOrder" />
+            <!-- <OrderSelect v-model="selectedOrder" /> -->
          </div>
       </div>
 

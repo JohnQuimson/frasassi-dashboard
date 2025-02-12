@@ -135,10 +135,10 @@ export default {
 <template>
    <div class="visore-container pb-5">
       <div class="visore-header">
-         <div class="container d-flex justify-content-between align-items-center">
+         <div class="container p-0 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
                <i class="fa-solid fa-magnifying-glass search-left"></i>
-               <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca sessione" />
+               <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca risposta" />
                <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
             </div>
             <!-- select filter -->
@@ -153,8 +153,8 @@ export default {
          </div>
 
          <!-- Sezione Statistiche -->
-         <div class="col-12 mt-5">
-            <h2 class="text-info">Statistiche</h2>
+         <div class="container p-0 mt-5">
+            <h2 class="stat-title">Statistiche</h2>
             <p class="text-white m-0">Risposte corrette: {{ statistiche.corrette }} / {{ statistiche.totali }}</p>
             <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
          </div>
@@ -164,7 +164,7 @@ export default {
          <div class="row">
             <ul class="ps-0">
                <li v-for="(risposte, quiz) in filteredRisposte" :key="quiz">
-                  <h3 class="text-info mt-5">{{ quiz }}</h3>
+                  <h3 class="quiz-title mt-5">{{ quiz }}</h3>
                   <div class="row g-3 d-flex justify-content-center mb-5">
                      <RispostaCard
                         v-for="risposta in risposte"
@@ -268,5 +268,15 @@ export default {
          }
       }
    }
+
+   .stat-title {
+      font-size: 2rem;
+      color: $primary-color;
+   }
+}
+
+.quiz-title {
+   font-size: 2rem;
+   color: $primary-color;
 }
 </style>

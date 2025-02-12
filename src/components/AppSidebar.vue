@@ -91,7 +91,7 @@ export default {
 @use '../assets/scss/style.scss' as *;
 
 .sidebar {
-   width: 50%;
+   width: 30%;
    transition: width 0.8s ease;
    height: 100vh;
 

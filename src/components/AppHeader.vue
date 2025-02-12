@@ -51,7 +51,7 @@ export default {
 
 <template>
    <header>
-      <div class="container">
+      <div class="container p-0">
          <h1>{{ title }}</h1>
 
          <!-- Bottone per mostrare le info utente -->

@@ -23,12 +23,12 @@ export default {
 </script>
 
 <template>
-   <div class="col-10">
+   <div class="col-12">
       <router-link :to="`/visore/${visore.id}`" class="visore-card shadow-sm">
          <div class="card-body" @click="populateSelectedVisore()">
             <div class="card-title">
                <h5>{{ visore.nome }} {{ visore.cognome }}</h5>
-               <p class="text-danger">ID: {{ visore.id }}</p>
+               <!-- <p class="text-danger">ID: {{ visore.id }}</p> -->
             </div>
          </div>
       </router-link>
