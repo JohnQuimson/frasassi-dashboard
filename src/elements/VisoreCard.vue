@@ -15,7 +15,7 @@ export default {
    },
 
    methods: {
-      populateSelectedSessione() {
+      populateSelectedVisore() {
          store.selectedVisore = this.visore;
       },
    },
@@ -24,7 +24,7 @@ export default {
 
 <template>
    <div class="col-10">
-      <div class="visore-card shadow-sm" @click="populateSelectedSessione()">
+      <div class="visore-card shadow-sm" @click="populateSelectedVisore()">
          <router-link :to="`/visore/${visore.id}`">
             <div class="card-title">
                <h5>{{ visore.nome }} {{ visore.cognome }}</h5>

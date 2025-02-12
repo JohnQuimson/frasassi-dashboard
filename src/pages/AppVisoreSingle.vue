@@ -28,7 +28,6 @@ export default {
    methods: {},
    created() {
       this.store.title = `Visore ${this.store.selectedVisore.nome}`;
-      this.getVisori();
    },
 };
 </script>

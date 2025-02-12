@@ -84,6 +84,13 @@ watch(
    },
    { deep: true }
 );
+watch(
+   () => store.selectedVisore,
+   (newValue) => {
+      localStorage.setItem('selectedVisore', JSON.stringify(newValue));
+   },
+   { deep: true }
+);
 
 // Inizializza lo stato dell'autenticazione quando l'app parte
 store.initializeAuth();
