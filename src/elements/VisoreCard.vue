@@ -24,13 +24,13 @@ export default {
 
 <template>
    <div class="col-10">
-      <div class="visore-card shadow-sm" @click="populateSelectedVisore()">
-         <router-link :to="`/visore/${visore.id}`">
+      <router-link :to="`/visore/${visore.id}`" class="visore-card shadow-sm">
+         <div class="card-body" @click="populateSelectedVisore()">
             <div class="card-title">
                <h5>{{ visore.nome }} {{ visore.cognome }}</h5>
             </div>
-         </router-link>
-      </div>
+         </div>
+      </router-link>
    </div>
 </template>
 
@@ -46,5 +46,17 @@ export default {
    padding: 20px;
    transition: transform 0.3s ease, box-shadow 0.3s ease;
    z-index: 10;
+
+   .card-body {
+      .card-title {
+         font-size: 1.1rem;
+         color: $white-color;
+      }
+   }
+
+   &:hover {
+      transform: scale(1.05);
+      box-shadow: 15px 15px 30px rgba(0, 0, 0, 0.3);
+   }
 }
 </style>
