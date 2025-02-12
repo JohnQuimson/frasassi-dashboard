@@ -28,6 +28,10 @@ export const store = reactive({
       titolo: null,
    },
 
+   selectedVisore: JSON.parse(localStorage.getItem('selectedVisore')) || {
+      nome: null,
+   },
+
    // selectedVideo: {
    //    nome: null,
    // },

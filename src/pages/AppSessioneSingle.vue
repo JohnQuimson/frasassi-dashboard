@@ -3,12 +3,16 @@ import { store } from '../store';
 import axios from '../assets/js/partials/axiosConfig';
 import Loader from '../elements/Loader.vue';
 import AlertNotification from '../elements/AlertNotification.vue';
+import VisoreCard from '../elements/VisoreCard.vue';
+import OrderSelect from '../elements/OrderSelect.vue';
 
 export default {
    name: 'AppSessioneSingle',
    data() {
       return {
          store,
+         searchQuery: '',
+         selectedOrder: '',
          loading: false,
          sessione: null,
          alert: {
@@ -23,6 +27,8 @@ export default {
    components: {
       Loader,
       AlertNotification,
+      VisoreCard,
+      OrderSelect,
    },
 
    methods: {
@@ -59,6 +65,35 @@ export default {
                this.loading = false;
             });
       },
+
+      clearSearch() {
+         this.searchQuery = '';
+      },
+   },
+
+   computed: {
+      filteredVisori() {
+         let visori = this.store.visori;
+
+         // Filtro per nome e cognome
+         if (this.searchQuery.trim() !== '') {
+            const query = this.searchQuery.toLowerCase();
+            visori = visori.filter((visore) => {
+               return visore.nome.toLowerCase().includes(query) || visore.cognome.toLowerCase().includes(query);
+            });
+         }
+
+         // Ordinamento in base alla selezione
+         if (this.selectedOrder === 'nome') {
+            visori.sort((a, b) => a.nome.localeCompare(b.nome));
+         } else if (this.selectedOrder === 'cognome') {
+            visori.sort((a, b) => a.cognome.localeCompare(b.cognome));
+         } else if (this.selectedOrder === 'data') {
+            visori.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+         }
+
+         return visori;
+      },
    },
 
    created() {
@@ -72,7 +107,7 @@ export default {
    <Loader v-if="loading" />
 
    <div class="sessione-container pb-5">
-      <!-- <div class="sessione-header">
+      <div class="visore-header">
          <div class="container d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
                <i class="fa-solid fa-magnifying-glass search-left"></i>
@@ -81,19 +116,21 @@ export default {
             </div>
             <OrderSelect v-model="selectedOrder" />
          </div>
-      </div> -->
+      </div>
 
       <div class="container">
          <div class="row g-3">
             <h2 class="text-white">Lista Visori</h2>
-            <div class="row g-3">
-               <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
+            <div class="row g-3 d-flex justify-content-center">
+               <!-- <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
                   <router-link :to="`/visore/${visore.id}`">
                      <div class="card p-3">
                         <h5>{{ visore.nome }} {{ visore.cognome }}</h5>
                      </div>
                   </router-link>
-               </div>
+               </div> -->
+
+               <VisoreCard v-for="visore in filteredVisori" :key="visore.id" :visore="visore" />
             </div>
          </div>
       </div>
@@ -110,4 +147,56 @@ export default {
 
 <style scoped lang="scss">
 @use '../assets/scss/style.scss' as *;
+
+.visore-header {
+   position: sticky;
+   top: 0;
+   right: 0;
+   left: 0;
+   z-index: 2;
+   padding-bottom: 20px;
+   background-color: $background-color;
+
+   .search-bar {
+      background-color: $secondary-bg-color;
+      border-radius: 20px;
+      position: relative;
+      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+      width: 250px;
+
+      .search-left {
+         padding: 10px;
+         color: $gray-color;
+      }
+
+      .search-input {
+         border: none;
+         max-width: 70%;
+         width: 90%;
+         background-color: $secondary-bg-color;
+         font-size: 14px;
+         color: $gray-color;
+
+         &:focus-visible {
+            outline: $primary-color;
+         }
+      }
+
+      .search-right {
+         position: absolute;
+         right: 10px;
+         color: $gray-color;
+
+         &:hover {
+            color: $primary-color;
+            cursor: pointer;
+         }
+      }
+
+      .x-placeholder {
+         padding: 10px;
+         opacity: 0;
+      }
+   }
+}
 </style>
