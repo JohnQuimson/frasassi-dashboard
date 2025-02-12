@@ -46,6 +46,7 @@ export const store = reactive({
    // users: [],
 
    sessioni: [],
+   risposte: [],
 
    // Funzione per inizializzare lo stato dell'autenticazione all'avvio
    initializeAuth() {
