@@ -1,7 +1,7 @@
 import { reactive, watch } from 'vue';
 
 export const store = reactive({
-   title: 'Dashboard',
+   title: 'Grotte di Frasassi',
    searchText: '',
    loading: true,
 

@@ -33,26 +33,14 @@ export default {
             <li class="nav-item" v-for="item in links" :key="item.name">
                <router-link
                   :to="item.path"
-                  class="nav-link d-flex align-items-center justify-content-start"
+                  class="nav-link d-flex align-items-center justify-content-center"
                   active-class="active"
                >
                   <i :class="item.icon" class="me-2 icona"></i>
                   <span class="name">{{ item.name }}</span>
                </router-link>
             </li>
-            <!-- <li v-if="role === 'admin'" class="nav-item" v-for="item in adminLinks" :key="item.name">
-               <router-link
-                  :to="item.path"
-                  class="nav-link d-flex align-items-center justify-content-start"
-                  active-class="active"
-               >
-                  <i :class="item.icon" class="me-2"></i>
-                  <span>{{ item.name }}</span>
-               </router-link>
-            </li> -->
          </ul>
-
-         <!-- <router-link v-if="!isLoggedIn && !isCollapsed" to="/login" class="btn btn-light mt-auto">Login</router-link> -->
       </div>
    </div>
 </template>

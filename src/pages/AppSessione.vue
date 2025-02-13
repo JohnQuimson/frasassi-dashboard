@@ -154,7 +154,7 @@ export default {
       <!-- <CreateButton to="/sessione-create" /> -->
 
       <div class="sessione-header">
-         <div class="container d-flex justify-content-between align-items-center">
+         <div class="container p-0 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
                <i class="fa-solid fa-magnifying-glass search-left"></i>
                <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca sessione" />
@@ -164,8 +164,8 @@ export default {
          </div>
       </div>
 
-      <div class="container">
-         <div v-if="!filteredSessioni.length" class="alert alert-info">Nessun dato trovato</div>
+      <div class="container p-0">
+         <div v-if="!filteredSessioni.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
 
          <div class="row g-3 d-flex justify-content-center">
             <SessioneCard

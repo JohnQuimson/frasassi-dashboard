@@ -4,7 +4,6 @@ import AppSidebar from './components/AppSidebar.vue';
 import AppMain from './components/AppMain.vue';
 import AppFooter from './components/AppFooter.vue';
 import { store } from './store.js';
-import AppLogin from './pages/AppLogin.vue';
 
 export default {
    name: 'App',
@@ -14,7 +13,6 @@ export default {
       AppSidebar,
       AppMain,
       AppFooter,
-      AppLogin,
    },
 
    data() {
@@ -22,15 +20,6 @@ export default {
          store,
       };
    },
-
-   // created() {
-   //    const token = localStorage.getItem('token');
-   //    if (token) {
-   //       this.store.auth.isAuthenticated = true;
-   //    } else {
-   //       this.store.auth.isAuthenticated = false;
-   //    }
-   // },
 
    computed: {
       isLoginPage() {
