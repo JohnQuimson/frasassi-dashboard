@@ -4,6 +4,7 @@ import axios from '../assets/js/partials/axiosConfig';
 import Loader from '../elements/Loader.vue';
 import AlertNotification from '../elements/AlertNotification.vue';
 import RispostaCard from '../elements/RispostaCard.vue';
+import { jsPDF } from 'jspdf';
 
 export default {
    name: 'AppVisoreSingle',
@@ -92,6 +93,57 @@ export default {
       clearSearch() {
          this.searchQuery = '';
       },
+
+      generatePDF() {
+         const doc = new jsPDF();
+         const margin = 20;
+         let yPosition = 30; // Posizione iniziale per il testo
+
+         // Aggiungi il titolo
+         doc.setFontSize(18);
+         doc.text('Statistiche Risposte', margin, yPosition);
+         yPosition += 10;
+
+         // Aggiungi le statistiche
+         doc.setFontSize(12);
+         doc.text(`Risposte corrette: ${this.statistiche.corrette} / ${this.statistiche.totali}`, margin, yPosition);
+         yPosition += 5;
+         doc.text(`Percentuale di correttezza: ${this.statistiche.percentuale}%`, margin, yPosition);
+         yPosition += 10;
+
+         // Aggiungi le risposte
+         Object.keys(this.filteredRisposte).forEach((quiz) => {
+            if (yPosition + 10 > 280) {
+               doc.addPage(); // Aggiungi una nuova pagina se lo spazio è insufficiente
+               yPosition = 20; // Ripristina la posizione verticale per la nuova pagina
+            }
+
+            doc.setFontSize(14);
+            doc.text(quiz, margin, yPosition);
+            yPosition += 10;
+
+            this.filteredRisposte[quiz].forEach((risposta) => {
+               if (yPosition + 10 > 280) {
+                  doc.addPage(); // Aggiungi una nuova pagina se lo spazio è insufficiente
+                  yPosition = 20; // Ripristina la posizione verticale per la nuova pagina
+               }
+
+               const isCorrect = risposta.isCorrect ? 'Corretto' : 'Sbagliato';
+               doc.setFontSize(12);
+               doc.text(`Domanda: ${risposta.domanda.domanda}`, margin, yPosition);
+               yPosition += 5;
+               doc.text(`Opzione: ${risposta.opzione.testo}`, margin, yPosition);
+               yPosition += 5;
+               doc.text(`Risposta: ${isCorrect}`, margin, yPosition);
+               yPosition += 10; // Spazio tra le risposte
+            });
+
+            yPosition += 10; // Spazio extra tra i quiz
+         });
+
+         // Salva il PDF
+         doc.save('risposte_statistiche.pdf');
+      },
    },
 
    computed: {
@@ -153,10 +205,14 @@ export default {
          </div>
 
          <!-- Sezione Statistiche -->
-         <div class="container p-0 mt-5">
-            <h2 class="stat-title">Statistiche</h2>
-            <p class="text-white m-0">Risposte corrette: {{ statistiche.corrette }} / {{ statistiche.totali }}</p>
-            <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
+         <div class="container p-0 mt-5 d-flex justify-content-between align-items-center">
+            <div>
+               <h2 class="stat-title">Statistiche</h2>
+               <p class="text-white m-0">Risposte corrette: {{ statistiche.corrette }} / {{ statistiche.totali }}</p>
+               <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
+            </div>
+
+            <button @click="generatePDF" class="btn btn-primary">Genera PDF</button>
          </div>
       </div>
 

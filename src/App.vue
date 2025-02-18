@@ -30,7 +30,7 @@ export default {
 </script>
 
 <template>
-   <div v-if="!isLoginPage" class="master-container">
+   <div class="master-container">
       <AppSidebar />
       <div class="right-container">
          <AppHeader />
@@ -41,8 +41,6 @@ export default {
 
       <!-- <AppFooter /> -->
    </div>
-
-   <AppLogin v-else />
 </template>
 
 <style lang="scss">
