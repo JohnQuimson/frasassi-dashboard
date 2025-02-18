@@ -27,8 +27,7 @@ export default {
       <router-link :to="`/visore/${visore.id}`" class="visore-card shadow-sm">
          <div class="card-body" @click="populateSelectedVisore()">
             <div class="card-title">
-               <h5>{{ visore.nome }} {{ visore.cognome }}</h5>
-               <!-- <p class="text-danger">ID: {{ visore.id }}</p> -->
+               <h5>Visore {{ visore.id }}</h5>
             </div>
          </div>
       </router-link>
