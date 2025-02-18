@@ -108,7 +108,7 @@ export default {
 
    <div class="sessione-container pb-5">
       <div class="visore-header">
-         <div class="container d-flex justify-content-between align-items-center">
+         <div class="container p-0 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
                <i class="fa-solid fa-magnifying-glass search-left"></i>
                <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca visore" />
@@ -118,9 +118,13 @@ export default {
          </div>
       </div>
 
-      <div class="container">
-         <div class="row g-3">
-            <h2 class="text-white">Lista Visori</h2>
+      <div class="container p-0">
+         <div v-if="!filteredVisori.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
+
+         <div v-else class="row g-3">
+            <div class="container p-0 mt-5">
+               <h2 class="visore-title">Lista visori</h2>
+            </div>
             <div class="row g-3 d-flex justify-content-center">
                <!-- <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
                   <router-link :to="`/visore/${visore.id}`">
@@ -198,5 +202,10 @@ export default {
          opacity: 0;
       }
    }
+}
+
+.visore-title {
+   font-size: 2rem;
+   color: $primary-color;
 }
 </style>
