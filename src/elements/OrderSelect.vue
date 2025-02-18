@@ -29,8 +29,8 @@ export default {
    <div class="filter">
       <select v-model="selectedOrder" class="form-select" aria-label="Ordina per" @change="emitOrderChange">
          <option value="" disabled>Ordina per</option>
-         <option value="1">Data creazione: asc</option>
-         <option value="2">Data creazione: desc</option>
+         <option value="1">Primo creato</option>
+         <option value="2">Ultimo creato</option>
       </select>
    </div>
 </template>

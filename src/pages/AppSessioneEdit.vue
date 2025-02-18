@@ -14,6 +14,7 @@ export default {
          },
          error: null,
          isLoading: false,
+         isModified: false,
       };
    },
    methods: {
@@ -50,6 +51,10 @@ export default {
                this.isLoading = false;
             });
       },
+
+      checkModified() {
+         this.isModified = this.sessione.nome !== '' || this.sessione.cognome !== '' || this.sessione.titolo !== '';
+      },
    },
 
    created() {
@@ -79,6 +84,7 @@ export default {
                         v-model="sessione.titolo"
                         class="form-control input-titolo"
                         placeholder="Titolo"
+                        @input="checkModified"
                      />
 
                      <div class="operator-info">
@@ -89,6 +95,7 @@ export default {
                               v-model="sessione.nome"
                               class="form-control input-nome"
                               placeholder="Nome"
+                              @input="checkModified"
                            />
                         </div>
 
@@ -99,6 +106,7 @@ export default {
                               v-model="sessione.cognome"
                               class="form-control input-cognome"
                               placeholder="Cognome"
+                              @input="checkModified"
                            />
                         </div>
 
@@ -106,8 +114,13 @@ export default {
                      </div>
                   </div>
                   <div class="card-buttons">
-                     <button @click="editSessione" class="edit-button" :disabled="isLoading">
-                        {{ isLoading ? 'Aggiornamento...' : 'Modifica' }}
+                     <button
+                        @click="editSessione"
+                        class="edit-button"
+                        :disabled="isLoading || !isModified"
+                        :class="{ 'disabled-button': isLoading || !isModified }"
+                     >
+                        {{ isLoading ? 'Aggiornamento...' : 'Salva' }}
                      </button>
                   </div>
                </div>
@@ -189,9 +202,15 @@ export default {
          border: none;
          padding: 5px 15px;
          color: $white-color;
+         cursor: pointer;
 
          &:hover {
             background-color: darken($primary-color, 5%);
+         }
+
+         &.disabled-button {
+            background-color: #ccc;
+            cursor: not-allowed;
          }
       }
    }
