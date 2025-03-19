@@ -1,5 +1,6 @@
 <script>
 import { store } from '../store';
+import axios from '../assets/js/partials/axiosConfig';
 
 export default {
    name: 'VisoreCard',
@@ -7,6 +8,10 @@ export default {
    data() {
       return {
          store,
+         statistiche: {
+            corrette: 0,
+            errate: 0,
+         },
       };
    },
 
@@ -18,6 +23,25 @@ export default {
       populateSelectedVisore() {
          store.selectedVisore = this.visore;
       },
+
+      getStats() {
+         const visoreId = this.store.selectedVisore.id;
+         const sessioneId = this.store.selectedSessione.id;
+
+         axios
+            .get(`${this.store.api.baseUrl}/risposte/statistiche/${visoreId}/${sessioneId}`)
+            .then((response) => {
+               console.log(response);
+               this.statistiche = response.data;
+            })
+            .catch((error) => {
+               console.log(error);
+            });
+      },
+   },
+
+   created() {
+      this.getStats();
    },
 };
 </script>
@@ -28,6 +52,10 @@ export default {
          <div class="card-body" @click="populateSelectedVisore()">
             <div class="card-title">
                <h5>Visore {{ visore.id }}</h5>
+            </div>
+            <div class="stats-container">
+               <p class="m-0 stats">Corrette: {{ statistiche.corrette }}</p>
+               <p class="m-0 stats">Errate: {{ statistiche.errate }}</p>
             </div>
          </div>
       </router-link>
@@ -51,6 +79,12 @@ export default {
       .card-title {
          font-size: 1.1rem;
          color: $white-color;
+      }
+
+      .stats-container {
+         .stats {
+            color: $gray-color;
+         }
       }
    }
 

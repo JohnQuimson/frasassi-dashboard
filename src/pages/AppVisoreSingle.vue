@@ -212,7 +212,7 @@ export default {
                <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
             </div>
 
-            <button @click="generatePDF" class="btn btn-primary">Genera PDF</button>
+            <!-- <button @click="generatePDF" class="btn btn-primary">Genera PDF</button> -->
          </div>
       </div>
 
