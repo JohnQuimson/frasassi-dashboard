@@ -21,17 +21,18 @@ export default {
          store.selectedVisore = this.visore;
       },
 
-      async getStats() {
-         try {
-            const visoreId = this.visore.id;
-            const sessioneId = store.selectedSessione.id;
+      getStats() {
+         const visoreId = this.visore.id;
+         const sessioneId = this.store.selectedSessione.id;
 
-            const response = await axios.get(`${store.api.baseUrl}/risposte/statistiche/${visoreId}/${sessioneId}`);
-
-            this.statistiche = response.data;
-         } catch (error) {
-            console.error('Errore nel caricamento delle statistiche:', error);
-         }
+         axios
+            .get(`${this.store.api.baseUrl}/risposte/statistiche/${visoreId}/${sessioneId}`)
+            .then((response) => {
+               this.statistiche = response.data;
+            })
+            .catch((error) => {
+               console.log(error);
+            });
       },
    },
    created() {

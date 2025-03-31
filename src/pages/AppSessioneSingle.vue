@@ -66,6 +66,17 @@ export default {
             });
       },
 
+      fetchStatsForVisori() {
+         this.$nextTick(() => {
+            this.store.visori.forEach((visore) => {
+               const visoreRef = this.$refs[`visoreCard-${visore.id}`];
+               if (visoreRef && Array.isArray(visoreRef) && visoreRef[0]) {
+                  visoreRef[0].getStats();
+               }
+            });
+         });
+      },
+
       clearSearch() {
          this.searchQuery = '';
       },
@@ -93,6 +104,17 @@ export default {
          }
 
          return visori;
+      },
+   },
+
+   watch: {
+      'store.visori': {
+         handler() {
+            this.$nextTick(() => {
+               this.fetchStatsForVisori();
+            });
+         },
+         deep: true,
       },
    },
 
@@ -134,7 +156,12 @@ export default {
                   </router-link>
                </div> -->
 
-               <VisoreCard v-for="visore in filteredVisori" :key="visore.id" :visore="visore" />
+               <VisoreCard
+                  v-for="visore in filteredVisori"
+                  :key="visore.id"
+                  :visore="visore"
+                  :ref="'visoreCard-' + visore.id"
+               />
             </div>
          </div>
       </div>
