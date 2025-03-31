@@ -4,7 +4,9 @@ import axios from '../assets/js/partials/axiosConfig';
 
 export default {
    name: 'VisoreCard',
-
+   props: {
+      visore: Object,
+   },
    data() {
       return {
          store,
@@ -14,32 +16,24 @@ export default {
          },
       };
    },
-
-   props: {
-      visore: Object,
-   },
-
    methods: {
       populateSelectedVisore() {
          store.selectedVisore = this.visore;
       },
 
-      getStats() {
-         const visoreId = this.store.selectedVisore.id;
-         const sessioneId = this.store.selectedSessione.id;
+      async getStats() {
+         try {
+            const visoreId = this.visore.id;
+            const sessioneId = store.selectedSessione.id;
 
-         axios
-            .get(`${this.store.api.baseUrl}/risposte/statistiche/${visoreId}/${sessioneId}`)
-            .then((response) => {
-               console.log(response);
-               this.statistiche = response.data;
-            })
-            .catch((error) => {
-               console.log(error);
-            });
+            const response = await axios.get(`${store.api.baseUrl}/risposte/statistiche/${visoreId}/${sessioneId}`);
+
+            this.statistiche = response.data;
+         } catch (error) {
+            console.error('Errore nel caricamento delle statistiche:', error);
+         }
       },
    },
-
    created() {
       this.getStats();
    },

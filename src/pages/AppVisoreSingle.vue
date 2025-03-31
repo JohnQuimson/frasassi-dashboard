@@ -97,15 +97,23 @@ export default {
       generatePDF() {
          const doc = new jsPDF();
          const margin = 20;
+         const pageWidth = 210 - 2 * margin; // Larghezza disponibile su A4 verticale
          let yPosition = 30; // Posizione iniziale per il testo
 
+         // Recupera nome sessione e ID visore
+         const sessioneNome = this.store.selectedSessione.titolo || 'Sessione';
+         const visoreId = this.store.selectedVisore.id || 'Visore';
+
+         // Crea il nome del file in formato "nome sessione: visore id.pdf"
+         const fileName = `${sessioneNome.replace(/[^a-zA-Z0-9]/g, '-')}_visore${visoreId}.pdf`;
+
          // Aggiungi il titolo
-         doc.setFontSize(18);
+         doc.setFontSize(12);
          doc.text('Statistiche Risposte', margin, yPosition);
          yPosition += 10;
 
          // Aggiungi le statistiche
-         doc.setFontSize(12);
+         doc.setFontSize(8);
          doc.text(`Risposte corrette: ${this.statistiche.corrette} / ${this.statistiche.totali}`, margin, yPosition);
          yPosition += 5;
          doc.text(`Percentuale di correttezza: ${this.statistiche.percentuale}%`, margin, yPosition);
@@ -114,35 +122,44 @@ export default {
          // Aggiungi le risposte
          Object.keys(this.filteredRisposte).forEach((quiz) => {
             if (yPosition + 10 > 280) {
-               doc.addPage(); // Aggiungi una nuova pagina se lo spazio è insufficiente
-               yPosition = 20; // Ripristina la posizione verticale per la nuova pagina
+               doc.addPage();
+               yPosition = 20;
             }
 
-            doc.setFontSize(14);
+            doc.setFontSize(8);
             doc.text(quiz, margin, yPosition);
             yPosition += 10;
 
             this.filteredRisposte[quiz].forEach((risposta) => {
                if (yPosition + 10 > 280) {
-                  doc.addPage(); // Aggiungi una nuova pagina se lo spazio è insufficiente
-                  yPosition = 20; // Ripristina la posizione verticale per la nuova pagina
+                  doc.addPage();
+                  yPosition = 20;
                }
 
                const isCorrect = risposta.isCorrect ? 'Corretto' : 'Sbagliato';
-               doc.setFontSize(12);
-               doc.text(`Domanda: ${risposta.domanda.domanda}`, margin, yPosition);
-               yPosition += 5;
-               doc.text(`Opzione: ${risposta.opzione.testo}`, margin, yPosition);
-               yPosition += 5;
-               doc.text(`Risposta: ${isCorrect}`, margin, yPosition);
-               yPosition += 10; // Spazio tra le risposte
+               doc.setFontSize(8);
+
+               // Usa splitTextToSize per formattare il testo all'interno della larghezza disponibile
+               let domandaText = doc.splitTextToSize(`Domanda: ${risposta.domanda.domanda}`, pageWidth);
+               let opzioneText = doc.splitTextToSize(`Opzione: ${risposta.opzione.testo}`, pageWidth);
+               let rispostaText = doc.splitTextToSize(`Risposta: ${isCorrect}`, pageWidth);
+
+               // Aggiungi il testo riformattato al PDF
+               doc.text(domandaText, margin, yPosition);
+               yPosition += domandaText.length * 5;
+
+               doc.text(opzioneText, margin, yPosition);
+               yPosition += opzioneText.length * 5;
+
+               doc.text(rispostaText, margin, yPosition);
+               yPosition += rispostaText.length * 5 + 5; // Spazio extra tra le risposte
             });
 
             yPosition += 10; // Spazio extra tra i quiz
          });
 
-         // Salva il PDF
-         doc.save('risposte_statistiche.pdf');
+         // Salva il PDF con il nome personalizzato
+         doc.save(fileName);
       },
    },
 
@@ -212,7 +229,7 @@ export default {
                <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
             </div>
 
-            <!-- <button @click="generatePDF" class="btn btn-primary">Genera PDF</button> -->
+            <button @click="generatePDF" class="btn btn-primary">Genera PDF</button>
          </div>
       </div>
 
