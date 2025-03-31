@@ -141,8 +141,8 @@ export default {
 
                // Usa splitTextToSize per formattare il testo all'interno della larghezza disponibile
                let domandaText = doc.splitTextToSize(`Domanda: ${risposta.domanda.domanda}`, pageWidth);
-               let opzioneText = doc.splitTextToSize(`Opzione: ${risposta.opzione.testo}`, pageWidth);
-               let rispostaText = doc.splitTextToSize(`Risposta: ${isCorrect}`, pageWidth);
+               let opzioneText = doc.splitTextToSize(`Risposta: ${risposta.opzione.testo}`, pageWidth);
+               let rispostaText = doc.splitTextToSize(`Esito: ${isCorrect}`, pageWidth);
 
                // Aggiungi il testo riformattato al PDF
                doc.text(domandaText, margin, yPosition);
