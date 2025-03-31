@@ -42,7 +42,7 @@ export default {
 </script>
 
 <template>
-   <div class="col-12">
+   <div class="col-12 p-0">
       <router-link :to="`/visore/${visore.id}`" class="visore-card shadow-sm">
          <div class="card-body" @click="populateSelectedVisore()">
             <div class="card-title">

@@ -143,11 +143,11 @@ export default {
       <div class="container p-0">
          <div v-if="!filteredVisori.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
 
-         <div v-else class="row g-3">
+         <div v-else class="row g-3 m-0">
             <div class="container p-0 mt-5">
                <h2 class="visore-title">Lista visori</h2>
             </div>
-            <div class="row g-3 d-flex justify-content-center">
+            <div class="row g-3 m-0 p-0 d-flex justify-content-center">
                <!-- <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
                   <router-link :to="`/visore/${visore.id}`">
                      <div class="card p-3">

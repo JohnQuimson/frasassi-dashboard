@@ -26,7 +26,7 @@ export default {
    <div :class="['sidebar', { 'sidebar-collapsed': isCollapsed }]" class="d-flex flex-column text-white">
       <div class="sidebar-content">
          <div class="sidebar-logo mt-5">
-            <img class="img-fluid" src="/public/img/logo_ldmultimedia_bianco.png" alt="Logo" />
+            <img class="img-fluid" src="/public/img/logo.png" alt="Logo" />
          </div>
 
          <ul class="nav flex-column mt-5">
@@ -137,7 +137,7 @@ export default {
 }
 
 .sidebar-logo {
-   width: 30%;
+   width: 60%;
    margin: 0 auto;
 
    img {
