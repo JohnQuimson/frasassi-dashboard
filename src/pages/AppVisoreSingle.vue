@@ -229,7 +229,7 @@ export default {
                <p class="text-white m-0">Percentuale di correttezza: {{ statistiche.percentuale }}%</p>
             </div>
 
-            <button @click="generatePDF" class="btn btn-primary">Genera PDF</button>
+            <button @click="generatePDF" class="generate-pdf">Genera PDF</button>
          </div>
       </div>
 
@@ -345,6 +345,18 @@ export default {
    .stat-title {
       font-size: 2rem;
       color: $primary-color;
+   }
+
+   .generate-pdf {
+      background-color: $primary-color;
+      border: none;
+      border-radius: 20px;
+      padding: 10px 20px;
+      transition: transform 0.3s ease-in-out;
+
+      &:hover {
+         transform: scale(1.1);
+      }
    }
 }
 

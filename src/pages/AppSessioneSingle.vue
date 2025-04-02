@@ -219,7 +219,7 @@ export default {
          <div v-else class="row g-3 m-0">
             <div class="container d-flex justify-content-between p-0 mt-5">
                <h2 class="visore-title">Lista visori</h2>
-               <button @click="generatePDF" class="btn btn-primary">Genera PDF</button>
+               <button @click="generatePDF" class="generate-pdf">Scarica risultati</button>
             </div>
             <div class="row g-3 m-0 p-0 d-flex justify-content-center">
                <!-- <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
@@ -308,5 +308,17 @@ export default {
 .visore-title {
    font-size: 2rem;
    color: $primary-color;
+}
+
+.generate-pdf {
+   background-color: $primary-color;
+   border: none;
+   border-radius: 20px;
+   padding: 10px 20px;
+   transition: transform 0.3s ease-in-out;
+
+   &:hover {
+      transform: scale(1.1); // Il pulsante cresce del 10%
+   }
 }
 </style>
