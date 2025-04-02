@@ -19,6 +19,7 @@ export default {
    methods: {
       populateSelectedVisore() {
          store.selectedVisore = this.visore;
+         // console.log('visore selez', store.selectedVisore);
       },
 
       getStats() {

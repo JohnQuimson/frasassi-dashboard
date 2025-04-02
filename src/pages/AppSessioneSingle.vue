@@ -1,6 +1,7 @@
 <script>
 import { store } from '../store';
 import axios from '../assets/js/partials/axiosConfig';
+import { jsPDF } from 'jspdf';
 import Loader from '../elements/Loader.vue';
 import AlertNotification from '../elements/AlertNotification.vue';
 import VisoreCard from '../elements/VisoreCard.vue';
@@ -56,6 +57,7 @@ export default {
             .get(`${this.store.api.baseUrl}${this.store.api.apiUrls.sessioni}/${sessioneId}/visori`)
             .then((response) => {
                this.store.visori = response.data;
+               console.log(this.store.visori);
             })
             .catch((error) => {
                console.error(error);
@@ -79,6 +81,77 @@ export default {
 
       clearSearch() {
          this.searchQuery = '';
+      },
+
+      generatePDF() {
+         this.store.visori.forEach((visore) => {
+            const doc = new jsPDF();
+            const margin = 20;
+            const pageWidth = 210 - 2 * margin; // Larghezza disponibile su A4 verticale
+            let yPosition = 30; // Posizione iniziale per il testo
+
+            // Recupera nome sessione e ID visore
+            const sessioneNome = this.store.selectedSessione.titolo || 'Sessione';
+            const visoreId = visore.id || 'Visore';
+
+            // Crea il nome del file in formato "nome sessione: visore id.pdf"
+            const fileName = `${sessioneNome.replace(/[^a-zA-Z0-9]/g, '-')}_visore${visoreId}.pdf`;
+
+            // Aggiungi il titolo
+            doc.setFontSize(12);
+            doc.text('Statistiche Risposte', margin, yPosition);
+            yPosition += 10;
+
+            doc.setFontSize(12);
+            doc.text(`Visore ${visoreId}`, margin, yPosition);
+            yPosition += 10;
+
+            // Aggiungi le statistiche
+            if (visore.risposte) {
+               const corrette = visore.risposte.filter((risposta) => risposta.isCorrect).length;
+               const totali = visore.risposte.length;
+               const percentuale = totali > 0 ? ((corrette / totali) * 100).toFixed(2) : '0.00';
+
+               doc.setFontSize(8);
+               doc.text(`Risposte corrette: ${corrette} / ${totali}`, margin, yPosition);
+               yPosition += 5;
+               doc.text(`Percentuale di correttezza: ${percentuale}%`, margin, yPosition);
+               yPosition += 10;
+            }
+
+            // Aggiungi le risposte
+            if (visore.risposte) {
+               visore.risposte.forEach((risposta) => {
+                  if (yPosition + 10 > 280) {
+                     doc.addPage();
+                     yPosition = 20;
+                  }
+
+                  const isCorrect = risposta.isCorrect ? 'Corretto' : 'Sbagliato';
+                  doc.setFontSize(8);
+
+                  // Usa splitTextToSize per formattare il testo all'interno della larghezza disponibile
+                  let domandaText = doc.splitTextToSize(`Domanda: ${risposta.domanda.domanda}`, pageWidth);
+                  let opzioneText = doc.splitTextToSize(`Risposta: ${risposta.opzione.testo}`, pageWidth);
+                  let rispostaText = doc.splitTextToSize(`Esito: ${isCorrect}`, pageWidth);
+
+                  // Aggiungi il testo riformattato al PDF
+                  doc.text(domandaText, margin, yPosition);
+                  yPosition += domandaText.length * 5;
+
+                  doc.text(opzioneText, margin, yPosition);
+                  yPosition += opzioneText.length * 5;
+
+                  doc.text(rispostaText, margin, yPosition);
+                  yPosition += rispostaText.length * 5 + 5; // Spazio extra tra le risposte
+               });
+
+               yPosition += 10; // Spazio extra tra i quiz
+            }
+
+            // Salva il PDF con il nome personalizzato
+            doc.save(fileName);
+         });
       },
    },
 
@@ -144,8 +217,9 @@ export default {
          <div v-if="!filteredVisori.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
 
          <div v-else class="row g-3 m-0">
-            <div class="container p-0 mt-5">
+            <div class="container d-flex justify-content-between p-0 mt-5">
                <h2 class="visore-title">Lista visori</h2>
+               <button @click="generatePDF" class="btn btn-primary">Genera PDF</button>
             </div>
             <div class="row g-3 m-0 p-0 d-flex justify-content-center">
                <!-- <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
