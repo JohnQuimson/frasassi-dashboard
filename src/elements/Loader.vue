@@ -18,63 +18,31 @@
 }
 
 .loader {
-   position: relative;
-   width: 164px;
-   height: 164px;
+   width: 45px;
+   aspect-ratio: 1;
+   --c: no-repeat linear-gradient(#ffffff 0 0);
+   background: var(--c) 0% 100%, var(--c) 50% 100%, var(--c) 100% 100%;
+   animation: l2 1s infinite linear;
 }
 
-.loader::before,
-.loader::after {
-   content: '';
-   position: absolute;
-   width: 40px;
-   height: 40px;
-   background-color: #fff;
-   left: 50%;
-   top: 50%;
-   animation: rotate 1s ease-in infinite;
-}
-
-.loader::after {
-   width: 20px;
-   height: 20px;
-   background-color: #ff3d00;
-   animation: rotate 1s ease-in infinite, moveY 1s ease-in infinite;
-}
-
-@keyframes moveY {
-   0%,
-   100% {
-      top: 10%;
-   }
-   45%,
-   55% {
-      top: 59%;
-   }
-   60% {
-      top: 40%;
-   }
-}
-
-@keyframes rotate {
+@keyframes l2 {
    0% {
-      transform: translate(-50%, -100%) rotate(0deg) scale(1, 1);
+      background-size: 20% 100%, 20% 100%, 20% 100%;
    }
-   25% {
-      transform: translate(-50%, 0%) rotate(180deg) scale(1, 1);
+   20% {
+      background-size: 20% 60%, 20% 100%, 20% 100%;
    }
-   45%,
-   55% {
-      transform: translate(-50%, 100%) rotate(180deg) scale(3, 0.5);
+   40% {
+      background-size: 20% 80%, 20% 60%, 20% 100%;
    }
    60% {
-      transform: translate(-50%, 100%) rotate(180deg) scale(1, 1);
+      background-size: 20% 100%, 20% 80%, 20% 60%;
    }
-   75% {
-      transform: translate(-50%, 0%) rotate(270deg) scale(1, 1);
+   80% {
+      background-size: 20% 100%, 20% 100%, 20% 80%;
    }
    100% {
-      transform: translate(-50%, -100%) rotate(360deg) scale(1, 1);
+      background-size: 20% 100%, 20% 100%, 20% 100%;
    }
 }
 </style>
