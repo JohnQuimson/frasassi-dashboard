@@ -40,6 +40,8 @@ export default {
             .get(`${this.store.api.baseUrl}${this.store.api.apiUrls.sessioni}/${sessioneId}`)
             .then((response) => {
                this.sessione = response.data;
+               this.store.selectedSessione = response.data;
+               this.store.title = `Sessione ${this.store.selectedSessione.titolo}`;
             })
             .catch((e) => {
                console.log(e);
@@ -188,7 +190,8 @@ export default {
    },
 
    created() {
-      this.store.title = `Sessione ${this.store.selectedSessione.titolo}`;
+      this.fetchSessione();
+
       this.getVisori();
    },
 };

@@ -23,6 +23,7 @@ export default {
 
       populateSelectedSessione() {
          store.selectedSessione = this.sessione;
+         localStorage.setItem('selectedSessione', JSON.stringify(this.sessione));
       },
    },
 };
