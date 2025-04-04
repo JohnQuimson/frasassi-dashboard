@@ -107,13 +107,17 @@ export default {
          // Crea il nome del file in formato "nome sessione: visore id.pdf"
          const fileName = `${sessioneNome.replace(/[^a-zA-Z0-9]/g, '-')}_visore${visoreId}.pdf`;
 
+         doc.setFontSize(12);
+         doc.text(`Visore ${visoreId} - Sessione ${sessioneNome}`, margin, yPosition);
+         yPosition += 10;
+
          // Aggiungi il titolo
          doc.setFontSize(12);
          doc.text('Statistiche Risposte', margin, yPosition);
          yPosition += 10;
 
          // Aggiungi le statistiche
-         doc.setFontSize(8);
+         doc.setFontSize(9);
          doc.text(`Risposte corrette: ${this.statistiche.corrette} / ${this.statistiche.totali}`, margin, yPosition);
          yPosition += 5;
          doc.text(`Percentuale di correttezza: ${this.statistiche.percentuale}%`, margin, yPosition);
@@ -126,7 +130,7 @@ export default {
                yPosition = 20;
             }
 
-            doc.setFontSize(8);
+            doc.setFontSize(10);
             doc.text(quiz, margin, yPosition);
             yPosition += 10;
 
@@ -195,7 +199,7 @@ export default {
    },
 
    created() {
-      this.store.title = `Visore ${this.store.selectedVisore.nome}`;
+      this.store.title = `Visore ${this.store.selectedVisore.id} - Sessione ${this.store.selectedSessione.titolo}`;
       this.fetchRisposte();
    },
 };

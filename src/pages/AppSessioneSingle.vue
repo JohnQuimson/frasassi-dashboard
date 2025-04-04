@@ -94,19 +94,20 @@ export default {
             const sessioneNome = this.store.selectedSessione.titolo || 'Sessione';
             const visoreId = visore.id || 'Visore';
 
-            // Crea il nome del file in formato "nome sessione: visore id.pdf"
+            //  nome del file
             const fileName = `${sessioneNome.replace(/[^a-zA-Z0-9]/g, '-')}_visore${visoreId}.pdf`;
 
-            // Aggiungi il titolo
+            // identificativo
+            doc.setFontSize(12);
+            doc.text(`Visore ${visoreId} - Sessione ${sessioneNome}`, margin, yPosition);
+            yPosition += 10;
+
+            // titolo statistiche
             doc.setFontSize(12);
             doc.text('Statistiche Risposte', margin, yPosition);
             yPosition += 10;
 
-            doc.setFontSize(12);
-            doc.text(`Visore ${visoreId}`, margin, yPosition);
-            yPosition += 10;
-
-            // Aggiungi le statistiche
+            //  statistiche
             if (visore.risposte) {
                const corrette = visore.risposte.filter((risposta) => risposta.isCorrect).length;
                const totali = visore.risposte.length;
@@ -119,7 +120,7 @@ export default {
                yPosition += 10;
             }
 
-            // Aggiungi le risposte
+            // risposte
             if (visore.risposte) {
                visore.risposte.forEach((risposta) => {
                   if (yPosition + 10 > 280) {
@@ -159,21 +160,16 @@ export default {
       filteredVisori() {
          let visori = this.store.visori;
 
-         // Filtro per nome e cognome
+         // Filtro per id, nome e cognome
          if (this.searchQuery.trim() !== '') {
             const query = this.searchQuery.toLowerCase();
             visori = visori.filter((visore) => {
-               return visore.nome.toLowerCase().includes(query) || visore.cognome.toLowerCase().includes(query);
+               return (
+                  String(visore.id).includes(query) ||
+                  visore.cognome.toLowerCase().includes(query) ||
+                  visore.nome.toLowerCase().includes(query)
+               );
             });
-         }
-
-         // Ordinamento in base alla selezione
-         if (this.selectedOrder === 'nome') {
-            visori.sort((a, b) => a.nome.localeCompare(b.nome));
-         } else if (this.selectedOrder === 'cognome') {
-            visori.sort((a, b) => a.cognome.localeCompare(b.cognome));
-         } else if (this.selectedOrder === 'data') {
-            visori.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
          }
 
          return visori;
@@ -206,7 +202,12 @@ export default {
          <div class="container p-0 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
                <i class="fa-solid fa-magnifying-glass search-left"></i>
-               <input v-model="searchQuery" type="text" class="search-input p-0" placeholder="Cerca visore" />
+               <input
+                  v-model="searchQuery"
+                  type="text"
+                  class="search-input p-0"
+                  placeholder="Cerca visore per numero"
+               />
                <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
             </div>
             <!-- <OrderSelect v-model="selectedOrder" /> -->
