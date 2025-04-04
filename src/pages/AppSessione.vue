@@ -199,54 +199,59 @@ export default {
 <style scoped lang="scss">
 @use '../assets/scss/style.scss' as *;
 
-.sessione-header {
-   position: sticky;
-   top: 0;
-   right: 0;
-   left: 0;
-   z-index: 2;
-   padding-bottom: 20px;
-   background-color: $background-color;
+.sessione-container {
+   width: 90%;
+   margin: 0 auto;
 
-   .search-bar {
-      background-color: $secondary-bg-color;
-      border-radius: 20px;
-      position: relative;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-      width: 250px;
+   .sessione-header {
+      position: sticky;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 2;
+      padding-bottom: 20px;
+      background-color: $background-color;
 
-      .search-left {
-         padding: 10px;
-         color: $gray-color;
-      }
-
-      .search-input {
-         border: none;
-         max-width: 70%;
-         width: 90%;
+      .search-bar {
          background-color: $secondary-bg-color;
-         font-size: 14px;
-         color: $gray-color;
+         border-radius: 20px;
+         position: relative;
+         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+         width: 250px;
 
-         &:focus-visible {
-            outline: $primary-color;
+         .search-left {
+            padding: 10px;
+            color: $gray-color;
          }
-      }
 
-      .search-right {
-         position: absolute;
-         right: 10px;
-         color: $gray-color;
+         .search-input {
+            border: none;
+            max-width: 70%;
+            width: 90%;
+            background-color: $secondary-bg-color;
+            font-size: 14px;
+            color: $gray-color;
 
-         &:hover {
-            color: $primary-color;
-            cursor: pointer;
+            &:focus-visible {
+               outline: $primary-color;
+            }
          }
-      }
 
-      .x-placeholder {
-         padding: 10px;
-         opacity: 0;
+         .search-right {
+            position: absolute;
+            right: 10px;
+            color: $gray-color;
+
+            &:hover {
+               color: $primary-color;
+               cursor: pointer;
+            }
+         }
+
+         .x-placeholder {
+            padding: 10px;
+            opacity: 0;
+         }
       }
    }
 }

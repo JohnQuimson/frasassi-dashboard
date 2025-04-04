@@ -51,16 +51,15 @@ export default {
 
 <template>
    <header>
-      <div class="container p-0">
-         <h1>{{ title }}</h1>
+      <h1>{{ title }}</h1>
 
-         <!-- Bottone per mostrare le info utente -->
-         <!-- <button @click="toggleUserInfoTooltip" class="user-info-btn">
+      <!-- Bottone per mostrare le info utente -->
+      <!-- <button @click="toggleUserInfoTooltip" class="user-info-btn">
             <i class="fa-solid fa-user"></i>
          </button> -->
 
-         <!-- Tooltip (nuvoletta) con le informazioni utente -->
-         <!-- <div v-if="showUserInfoTooltip" class="user-info-tooltip">
+      <!-- Tooltip (nuvoletta) con le informazioni utente -->
+      <!-- <div v-if="showUserInfoTooltip" class="user-info-tooltip">
             <h2>Informazioni Utente</h2>
             <p><strong>Nome:</strong> {{ userInfo.nome }}</p>
             <p><strong>Email:</strong> {{ userInfo.email }}</p>
@@ -81,7 +80,6 @@ export default {
                <i class="fa-solid fa-xmark"></i>
             </span>
          </div> -->
-      </div>
    </header>
 </template>
 
@@ -93,35 +91,36 @@ header {
    height: 15vh;
    display: flex;
    justify-content: space-between;
-   align-items: flex-end;
+   align-items: center;
+   width: 90%;
+   margin: 0 auto;
 
+   h1 {
+      text-transform: uppercase;
+      color: $primary-color;
+      font-size: 28px;
+      font-weight: 600;
+   }
+
+   .user-info-btn {
+      background-color: $gray-color;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      position: relative;
+      width: 40px;
+      height: 40px;
+
+      &:hover {
+         background-color: darken($gray-color, 10%);
+      }
+   }
    .container {
       height: 100%;
       display: flex;
       align-items: center;
       justify-content: space-between;
-
-      h1 {
-         text-transform: uppercase;
-         color: $primary-color;
-         font-size: 28px;
-         font-weight: 600;
-      }
-
-      .user-info-btn {
-         background-color: $gray-color;
-         color: white;
-         border: none;
-         border-radius: 50%;
-         cursor: pointer;
-         position: relative;
-         width: 40px;
-         height: 40px;
-
-         &:hover {
-            background-color: darken($gray-color, 10%);
-         }
-      }
    }
 }
 

@@ -261,111 +261,116 @@ export default {
 <style scoped lang="scss">
 @use '../assets/scss/style.scss' as *;
 
-.visore-header {
-   position: sticky;
-   top: 0;
-   right: 0;
-   left: 0;
-   z-index: 2;
-   padding-bottom: 20px;
-   background-color: $background-color;
-   border-bottom: 1px solid rgb(54, 54, 54);
+.visore-container {
+   width: 90%;
+   margin: 0 auto;
 
-   .search-bar {
-      background-color: $secondary-bg-color;
-      border-radius: 20px;
-      position: relative;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-      width: 250px;
+   .visore-header {
+      position: sticky;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 2;
+      padding-bottom: 20px;
+      background-color: $background-color;
+      border-bottom: 1px solid rgb(54, 54, 54);
 
-      .search-left {
-         padding: 10px;
-         color: $gray-color;
-      }
-
-      .search-input {
-         border: none;
-         max-width: 70%;
-         width: 90%;
+      .search-bar {
          background-color: $secondary-bg-color;
-         font-size: 14px;
-         color: $gray-color;
-
-         &:focus-visible {
-            outline: $primary-color;
-         }
-      }
-
-      .search-right {
-         position: absolute;
-         right: 10px;
-         color: $gray-color;
-
-         &:hover {
-            color: $primary-color;
-            cursor: pointer;
-         }
-      }
-
-      .x-placeholder {
-         padding: 10px;
-         opacity: 0;
-      }
-   }
-
-   .filter {
-      border-radius: 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
-
-      select {
-         width: 100%;
-         height: 80%;
          border-radius: 20px;
-         font-size: 14px;
-         background-color: $secondary-bg-color;
-         border: none;
-         color: $gray-color;
+         position: relative;
+         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+         width: 250px;
 
-         &:focus {
-            box-shadow: none;
+         .search-left {
+            padding: 10px;
+            color: $gray-color;
          }
 
-         option {
-            font-size: 16px;
-            padding: 0 20px;
+         .search-input {
+            border: none;
+            max-width: 70%;
+            width: 90%;
+            background-color: $secondary-bg-color;
+            font-size: 14px;
             color: $gray-color;
 
-            &:disabled {
+            &:focus-visible {
+               outline: $primary-color;
+            }
+         }
+
+         .search-right {
+            position: absolute;
+            right: 10px;
+            color: $gray-color;
+
+            &:hover {
+               color: $primary-color;
+               cursor: pointer;
+            }
+         }
+
+         .x-placeholder {
+            padding: 10px;
+            opacity: 0;
+         }
+      }
+
+      .filter {
+         border-radius: 20px;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+
+         select {
+            width: 100%;
+            height: 80%;
+            border-radius: 20px;
+            font-size: 14px;
+            background-color: $secondary-bg-color;
+            border: none;
+            color: $gray-color;
+
+            &:focus {
+               box-shadow: none;
+            }
+
+            option {
+               font-size: 16px;
+               padding: 0 20px;
                color: $gray-color;
-               background-color: $secondary-bg-color;
+
+               &:disabled {
+                  color: $gray-color;
+                  background-color: $secondary-bg-color;
+               }
             }
          }
       }
+
+      .stat-title {
+         font-size: 2rem;
+         color: $primary-color;
+      }
+
+      .generate-pdf {
+         background-color: $primary-color;
+         border: none;
+         border-radius: 20px;
+         padding: 10px 20px;
+         transition: transform 0.3s ease-in-out;
+
+         &:hover {
+            transform: scale(1.1);
+         }
+      }
    }
 
-   .stat-title {
+   .quiz-title {
       font-size: 2rem;
       color: $primary-color;
    }
-
-   .generate-pdf {
-      background-color: $primary-color;
-      border: none;
-      border-radius: 20px;
-      padding: 10px 20px;
-      transition: transform 0.3s ease-in-out;
-
-      &:hover {
-         transform: scale(1.1);
-      }
-   }
-}
-
-.quiz-title {
-   font-size: 2rem;
-   color: $primary-color;
 }
 </style>
