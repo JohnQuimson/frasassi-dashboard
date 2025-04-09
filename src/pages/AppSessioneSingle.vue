@@ -59,7 +59,6 @@ export default {
             .get(`${this.store.api.baseUrl}${this.store.api.apiUrls.sessioni}/${sessioneId}/visori`)
             .then((response) => {
                this.store.visori = response.data;
-               console.log(this.store.visori);
             })
             .catch((error) => {
                console.error(error);

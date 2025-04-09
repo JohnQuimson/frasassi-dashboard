@@ -40,7 +40,6 @@ export default {
    methods: {
       fetchRisposte() {
          this.loading = true;
-         console.log('Fetching risposte... loading:', this.loading);
          const sessioneId = this.store.selectedSessione.id;
          const visoreId = this.store.selectedVisore.id;
 
@@ -83,7 +82,6 @@ export default {
             })
             .finally(() => {
                this.loading = false;
-               console.log('finito risposte... loading:', this.loading);
             });
       },
 

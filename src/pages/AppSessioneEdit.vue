@@ -1,6 +1,7 @@
 <script>
 import axios from '../assets/js/partials/axiosConfig';
 import { store } from '../store';
+import Loader from '../elements/Loader.vue';
 
 export default {
    name: 'SessioneEdit',
@@ -17,6 +18,11 @@ export default {
          isModified: false,
       };
    },
+
+   components: {
+      Loader,
+   },
+
    methods: {
       fetchSessione() {
          const sessioneId = this.$route.params.id;
@@ -142,6 +148,12 @@ export default {
    padding: 20px;
 
    .card-body {
+      .input-titolo::-webkit-input-placeholder,
+      .input-nome::-webkit-input-placeholder,
+      .input-cognome::-webkit-input-placeholder {
+         color: #666666;
+      }
+
       .input-titolo {
          font-size: 1.1rem;
          color: $white-color;
