@@ -150,7 +150,7 @@ export default {
 <template>
    <Loader v-if="loading" />
 
-   <div class="sessione-container pb-5">
+   <div v-else class="sessione-container pb-5">
       <!-- <CreateButton to="/sessione-create" /> -->
 
       <div class="sessione-header">
@@ -165,7 +165,7 @@ export default {
       </div>
 
       <div class="container p-0">
-         <div v-if="!filteredSessioni.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
+         <div v-if="!loading && !filteredSessioni.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
 
          <div class="row g-3 d-flex justify-content-center">
             <SessioneCard

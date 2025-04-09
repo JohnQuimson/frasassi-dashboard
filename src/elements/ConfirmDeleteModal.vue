@@ -46,7 +46,7 @@ export default {
             </div>
             <div class="modal-footer">
                <button type="button" class="button-annulla" @click="cancel">Annulla</button>
-               <button type="button" class="button-delete" @click="confirm">Conferma</button>
+               <button type="button" class="button-delete" @click="confirm">Elimina</button>
             </div>
          </div>
       </div>
@@ -59,11 +59,6 @@ export default {
 .modal {
    align-items: center;
    justify-content: center;
-   // position: fixed;
-   // top: 0;
-   // left: 0;
-   // right: 0;
-   // bottom: 0;
    z-index: 1050;
    background-color: rgba(0, 0, 0, 0.5);
 
@@ -102,28 +97,29 @@ export default {
             border: none;
 
             .button-annulla {
-               background-color: transparent;
-               color: $gray-color;
+               background-color: $gray-color;
+               color: $white-color;
                border: 2px solid $gray-color;
                border-radius: 5px;
                margin-right: 10px;
 
                &:hover {
-                  background-color: $gray-color;
-                  color: $white-color;
+                  background-color: darken($gray-color, 10%);
+                  border: 2px solid darken($gray-color, 10%);
+                  color: white;
                }
             }
 
             .button-delete {
-               border: 2px solid $orange-color;
+               border: 2px solid $primary-color;
                border-radius: 5px;
                margin-right: 10px;
-               background-color: $orange-color;
+               background-color: $primary-color;
                color: $white-color;
 
                &:hover {
-                  background-color: darken($orange-color, 5%);
-                  border: 2px solid darken($orange-color, 5%);
+                  background-color: red;
+                  border: 2px solid red;
                }
             }
          }

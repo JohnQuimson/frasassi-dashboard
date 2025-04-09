@@ -40,6 +40,7 @@ export default {
    methods: {
       fetchRisposte() {
          this.loading = true;
+         console.log('Fetching risposte... loading:', this.loading);
          const sessioneId = this.store.selectedSessione.id;
          const visoreId = this.store.selectedVisore.id;
 
@@ -82,6 +83,7 @@ export default {
             })
             .finally(() => {
                this.loading = false;
+               console.log('finito risposte... loading:', this.loading);
             });
       },
 
@@ -206,7 +208,9 @@ export default {
 </script>
 
 <template>
-   <div class="visore-container pb-5">
+   <Loader v-if="loading" />
+
+   <div v-else class="visore-container pb-5">
       <div class="visore-header">
          <div class="container p-0 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
@@ -255,6 +259,10 @@ export default {
             </ul>
          </div>
       </div>
+   </div>
+
+   <div class="container p-0">
+      <div v-if="!loading && filteredRisposte.length == 0" class="mt-5 alert alert-info">Nessun dato trovato</div>
    </div>
 </template>
 

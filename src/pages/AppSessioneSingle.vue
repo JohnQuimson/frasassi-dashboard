@@ -200,7 +200,7 @@ export default {
 <template>
    <Loader v-if="loading" />
 
-   <div class="sessione-container pb-5">
+   <div v-else class="sessione-container pb-5">
       <div class="visore-header">
          <div class="container p-0 d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center search-bar">
@@ -218,7 +218,7 @@ export default {
       </div>
 
       <div class="container p-0">
-         <div v-if="!filteredVisori.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
+         <div v-if="!loading && !filteredVisori.length" class="mt-5 alert alert-info">Nessun dato trovato</div>
 
          <div v-else class="row g-3 m-0">
             <div class="container d-flex justify-content-between p-0 mt-5">
