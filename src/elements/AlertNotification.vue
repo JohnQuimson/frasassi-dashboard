@@ -44,17 +44,17 @@ export default {
 @use '../assets/scss/style.scss' as *;
 
 .notification {
-   background-color: green;
+   background-color: #0dc143;
    color: white;
-   position: fixed; /* Posizionamento fisso per rimanere visibile durante lo scrolling */
-   bottom: 0; /* Centra verticalmente */
-   left: 50%; /* Centra orizzontalmente */
-   transform: translate(-50%, -50%); /* Corregge il posizionamento rispetto al centro */
-   z-index: 1050; /* Garantisce che sia sopra gli altri elementi */
-   padding: 1rem 2rem; /* Spaziatura interna */
-   border-radius: 0.5rem; /* Arrotondamento degli angoli */
-   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge un'ombra per risalto */
-   text-align: center; /* Centra il testo */
-   max-width: 90%; /* Limita la larghezza su schermi piccoli */
+   position: fixed;
+   bottom: 0;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 1050;
+   padding: 1rem 2rem;
+   border-radius: 0.5rem;
+   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+   text-align: center;
+   max-width: 90%;
 }
 </style>
