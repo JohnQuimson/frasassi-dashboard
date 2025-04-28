@@ -367,6 +367,7 @@ export default {
          border-radius: 20px;
          padding: 10px 20px;
          transition: transform 0.3s ease-in-out;
+         color: white;
 
          &:hover {
             transform: scale(1.1);

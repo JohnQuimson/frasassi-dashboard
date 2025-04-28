@@ -6,6 +6,7 @@ import Loader from '../elements/Loader.vue';
 import AlertNotification from '../elements/AlertNotification.vue';
 import VisoreCard from '../elements/VisoreCard.vue';
 import OrderSelect from '../elements/OrderSelect.vue';
+import StatisticheModal from '../elements/StatisticheModal.vue';
 
 export default {
    name: 'AppSessioneSingle',
@@ -16,6 +17,7 @@ export default {
          selectedOrder: '',
          loading: false,
          sessione: null,
+         showModal: false,
          alert: {
             show: false,
             type: 'success',
@@ -30,6 +32,7 @@ export default {
       AlertNotification,
       VisoreCard,
       OrderSelect,
+      StatisticheModal,
    },
 
    methods: {
@@ -88,27 +91,20 @@ export default {
          this.store.visori.forEach((visore) => {
             const doc = new jsPDF();
             const margin = 20;
-            const pageWidth = 210 - 2 * margin; // Larghezza disponibile su A4 verticale
-            let yPosition = 30; // Posizione iniziale per il testo
+            const pageWidth = 210 - 2 * margin;
+            let yPosition = 30;
 
-            // Recupera nome sessione e ID visore
             const sessioneNome = this.store.selectedSessione.titolo || 'Sessione';
             const visoreId = visore.id || 'Visore';
-
-            //  nome del file
             const fileName = `${sessioneNome.replace(/[^a-zA-Z0-9]/g, '-')}_visore${visoreId}.pdf`;
 
-            // identificativo
             doc.setFontSize(12);
             doc.text(`Visore ${visoreId} - Sessione ${sessioneNome}`, margin, yPosition);
             yPosition += 10;
 
-            // titolo statistiche
-            doc.setFontSize(12);
             doc.text('Statistiche Risposte', margin, yPosition);
             yPosition += 10;
 
-            //  statistiche
             if (visore.risposte) {
                const corrette = visore.risposte.filter((risposta) => risposta.isCorrect).length;
                const totali = visore.risposte.length;
@@ -121,7 +117,6 @@ export default {
                yPosition += 10;
             }
 
-            // risposte
             if (visore.risposte) {
                visore.risposte.forEach((risposta) => {
                   if (yPosition + 10 > 280) {
@@ -132,12 +127,10 @@ export default {
                   const isCorrect = risposta.isCorrect ? 'Corretto' : 'Sbagliato';
                   doc.setFontSize(8);
 
-                  // Usa splitTextToSize per formattare il testo all'interno della larghezza disponibile
                   let domandaText = doc.splitTextToSize(`Domanda: ${risposta.domanda.domanda}`, pageWidth);
                   let opzioneText = doc.splitTextToSize(`Risposta: ${risposta.opzione.testo}`, pageWidth);
                   let rispostaText = doc.splitTextToSize(`Esito: ${isCorrect}`, pageWidth);
 
-                  // Aggiungi il testo riformattato al PDF
                   doc.text(domandaText, margin, yPosition);
                   yPosition += domandaText.length * 5;
 
@@ -145,15 +138,124 @@ export default {
                   yPosition += opzioneText.length * 5;
 
                   doc.text(rispostaText, margin, yPosition);
-                  yPosition += rispostaText.length * 5 + 5; // Spazio extra tra le risposte
+                  yPosition += rispostaText.length * 5 + 5;
                });
 
-               yPosition += 10; // Spazio extra tra i quiz
+               yPosition += 10;
             }
 
-            // Salva il PDF con il nome personalizzato
             doc.save(fileName);
+            this.showAlert(
+               'success',
+               'Statistiche Visori',
+               'PDF delle statistiche errori per visori scaricato correttamente'
+            );
          });
+      },
+
+      openStatisticheModal() {
+         this.showModal = true;
+      },
+
+      closeModal() {
+         this.showModal = false;
+      },
+
+      handleAction1() {
+         this.closeModal();
+         this.generatePDF();
+      },
+
+      handleAction2() {
+         this.closeModal();
+         this.callStatisticheErrori();
+      },
+
+      showAlert(type, title, message) {
+         this.alert = {
+            show: true,
+            type,
+            title,
+            message,
+         };
+      },
+
+      callStatisticheErrori() {
+         const sessioneId = this.store.selectedSessione?.id;
+         if (!sessioneId) {
+            this.showAlert('error', 'Errore', 'ID sessione non disponibile');
+            return;
+         }
+
+         axios
+            .get(`http://localhost:3000/statistiche/errori/${sessioneId}`)
+            .then((response) => {
+               const statistiche = response.data; // La risposta contiene i capitoli con gli errori
+
+               // Crea un nuovo documento PDF
+               const doc = new jsPDF();
+               const margin = 20;
+               const pageWidth = 210 - 2 * margin;
+               let yPosition = 30;
+
+               const sessioneNome = this.store.selectedSessione.titolo || 'Sessione';
+               const fileName = `${sessioneNome.replace(/[^a-zA-Z0-9]/g, '-')}_statistiche_errori.pdf`;
+
+               doc.setFontSize(12);
+               doc.text(`Statistiche Errori - Sessione ${sessioneNome}`, margin, yPosition);
+               yPosition += 10;
+
+               // Aggiungi una breve descrizione
+               // doc.setFontSize(10);
+               // doc.text('Dettaglio degli errori per la sessione', margin, yPosition);
+               // yPosition += 10;
+
+               // Itera sui capitoli (cap1, cap2, ecc.)
+               Object.keys(statistiche).forEach((capitoloKey) => {
+                  const capitolo = statistiche[capitoloKey];
+                  doc.setFontSize(10);
+                  doc.text(`Capitolo: ${capitoloKey}`, margin, yPosition);
+                  yPosition += 10;
+
+                  // Itera sugli errori di ogni capitolo
+                  Object.keys(capitolo).forEach((erroreId) => {
+                     const errore = capitolo[erroreId];
+                     const errori = errore.errori;
+                     const visori = errore.visori.join(', '); // Lista di visori separata da virgole
+
+                     if (yPosition + 20 > 280) {
+                        doc.addPage();
+                        yPosition = 20;
+                     }
+
+                     // Aggiungi le informazioni sull'errore
+                     doc.setFontSize(8);
+                     let erroreText = doc.splitTextToSize(`Domanda ${erroreId}`, pageWidth);
+                     let erroriText = doc.splitTextToSize(`Numero di errori: ${errori}`, pageWidth);
+                     let visoriText = doc.splitTextToSize(`ID Visori: ${visori}`, pageWidth);
+
+                     doc.text(erroreText, margin, yPosition);
+                     yPosition += erroreText.length * 5;
+
+                     doc.text(erroriText, margin, yPosition);
+                     yPosition += erroriText.length * 5; // Spazio tra le voci
+
+                     doc.text(visoriText, margin, yPosition);
+                     yPosition += visoriText.length * 5 + 10;
+                  });
+               });
+
+               // Scarica il file PDF
+               doc.save(fileName);
+               this.showAlert('success', 'Statistiche Errori', 'PDF delle statistiche errori scaricato correttamente');
+            })
+            .catch((error) => {
+               console.error('Errore nel caricamento delle statistiche errori:', error);
+               this.showAlert('error', 'Errore', 'Errore nel caricamento delle statistiche errori');
+            })
+            .finally(() => {
+               this.closeModal();
+            });
       },
    },
 
@@ -161,7 +263,6 @@ export default {
       filteredVisori() {
          let visori = this.store.visori;
 
-         // Filtro per id, nome e cognome
          if (this.searchQuery.trim() !== '') {
             const query = this.searchQuery.toLowerCase();
             visori = visori.filter((visore) => {
@@ -190,7 +291,6 @@ export default {
 
    created() {
       this.fetchSessione();
-
       this.getVisori();
    },
 };
@@ -212,7 +312,6 @@ export default {
                />
                <i v-if="searchQuery.length > 0" @click="clearSearch" class="fa-solid fa-xmark search-right"></i>
             </div>
-            <!-- <OrderSelect v-model="selectedOrder" /> -->
          </div>
       </div>
 
@@ -222,17 +321,9 @@ export default {
          <div v-else class="row g-3 m-0">
             <div class="container d-flex justify-content-between p-0 mt-5">
                <h2 class="visore-title">Lista visori</h2>
-               <button @click="generatePDF" class="generate-pdf">Scarica risultati</button>
+               <button @click="openStatisticheModal" class="btn btn-primary generate-pdf">Statistiche</button>
             </div>
             <div class="row g-3 m-0 p-0 d-flex justify-content-center">
-               <!-- <div v-for="visore in store.visori" :key="visore.id" class="col-md-4">
-                  <router-link :to="`/visore/${visore.id}`">
-                     <div class="card p-3">
-                        <h5>{{ visore.nome }} {{ visore.cognome }}</h5>
-                     </div>
-                  </router-link>
-               </div> -->
-
                <VisoreCard
                   v-for="visore in filteredVisori"
                   :key="visore.id"
@@ -242,6 +333,8 @@ export default {
             </div>
          </div>
       </div>
+
+      <StatisticheModal :visible="showModal" @close="closeModal" @action1="handleAction1" @action2="handleAction2" />
 
       <AlertNotification
          v-if="alert.show"

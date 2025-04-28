@@ -15,7 +15,7 @@ export default {
       },
       duration: {
          type: Number,
-         default: 50000, // Default: 3 secondi
+         default: 5000, // Default: 3 secondi
       },
    },
    data() {
